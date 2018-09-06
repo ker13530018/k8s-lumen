@@ -1,14 +1,14 @@
 steps:
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/k8s-centos-phpfpm-nginx-lumen:$REVISION_ID', '.']
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/k8s-centos-phpfpm-nginx-lumen:$REVISION_ID']
-  - name: 'gcr.io/cloud-builders/kubectl'
-    args:
-        - 'set'
-        - 'image'
-        - 'deployments/k8s-lumen'
-        - 'k8s-centos-phpfpm-nginx-lumen=gcr.io/$PROJECT_ID/k8s-centos-phpfpm-nginx-lumen:$REVISION_ID'
-    env:
-        - 'CLOUDSDK_COMPUTE_ZONE=asia-southeast1-b'
-        - 'CLOUDSDK_CONTAINER_CLUSTER=rebate-cluster-dev'
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/deft-medium-206511/$REPO_NAME:$TAG_NAME', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ["push", "gcr.io/deft-medium-206511/$REPO_NAME:$TAG_NAME"]
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+  - set
+  - image
+  - deployment/php-nginx-service
+  - github-ker13530018-express-first=gcr.io/$PROJECT_ID/$REPO_NAME:$TAG_NAME
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=asia-southeast1-a'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-k8s'
